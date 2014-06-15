@@ -1,0 +1,14 @@
+@keyframes animatedBackground {
+	0%  { background-position: 0 0; }
+	50% { background-position: 100% 0; }
+	100%{ background-position: 0% 0; }
+}
+
+#animate-area{
+	width: 560px; 
+	height: 400px; 
+	background-image: url(carte.png);
+	background-position: 0px 0px;
+	background-repeat: repeat-x;
+	animation: animatedBackground 5s linear;
+}

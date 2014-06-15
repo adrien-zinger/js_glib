@@ -1,0 +1,35 @@
+<!doctype html>
+
+<html>
+	<head>
+		<title>site</title>
+		<meta charset="utf-8" />
+        <link rel="stylesheet" href="styleAlmanac.css" />
+		<script type="text/javascript">
+			document.addEventListener("mousedown", getPosition, false);
+			function getPosition(event)
+			{
+				var x = new Number();
+				var y = new Number();
+				var canvas = document.getElementById("canvas");
+				if (event.x != undefined && event.y != undefined)
+				{
+				  x = event.x;
+				  y = event.y;
+				}
+				else
+				{
+				  x = event.clientX + document.body.scrollLeft +
+					  document.documentElement.scrollLeft;
+				  y = event.clientY + document.body.scrollTop +
+					  document.documentElement.scrollTop;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="head">
+			<img src="img/headChickenAlmanac1.png" height="300" width="300">
+		</div>
+	</body>
+</html>

@@ -1,0 +1,53 @@
+body
+{
+	overflow: hidden;
+	background-image: url(img/carte.png);
+	background-position: 0px 0px;
+	background-repeat: repeat;
+	/*animation: animatedBackground 5s linear infinite;*/
+}
+
+@keyframes animatedBackground
+{
+	0%  { background-position: 0 0; }
+	50% { background-position: 100% 0; }
+	100%{ background-position: 0% 0; }
+}
+
+
+/*@keyframes translate
+{
+	0%   {transform:  translate(0px, 0px);}
+	50%  {transform:  translate(20px, 0px);}
+	100% {transform:  translate(-20px, 0px);}
+}
+
+@-webkit-keyframes translate
+{
+	0%   {-webkit-transform: translate(0px, 0px);}
+	50%  {-webkit-transform:  translate(20px, 0px);}
+	100% {-webkit-transform:  translate(-20px, 0px);}
+}
+*/
+
+@keyframes headmouve
+{
+	0%   {background-position: -300px 300px;}
+	30%  {background: rotate(20deg);}
+	60%  {background-position: 0px 0px;}
+	90%  {transform: rotate(-20deg);}
+	100% {transform: rotate(0deg);}
+}
+#head
+{
+	position: fixed;
+	bottom: 0%;
+	left: 0%;
+	height: 300px;
+	width:  300px;
+	overflow: hidden;
+	background-position: 0px 0px;
+	background-size: 300px 300px;
+	background-repeat: no-repeat;
+	animation: headmouve 2s ease-out;
+}
