@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+        "use strict"
+
+        var library = {
+            map: {
+                blocks: [],
+
+                block_get: function(args) {
+                    if (typeof library.map.blocks[args.x] === "undefined")
+                        library.map.blocks[args.x] = [];
+                    return library.map.blocks[args.x][args.y];
+                },
+
+                block_set: function(args) {
+                    if (typeof library.map.blocks[args.x] === "undefined")
+                        library.map.blocks[args.x] = [];
+                    library.map.blocks[args.x][args.y] = args.block;
+                    // create an HTML element corresponding to the block...
+                },
+            },
+
+            camera: {
+                x: 0,
+                y: 0,
+
+                width: 0,
+                height: 0,
+
+                // for each bloc --> bloc.x bloc.y &
+                /*
+                css.left: bloc.x * bloc.width - camera.x
+                css.top: bloc.y * bloc.heigth - camera.y
+                */
+            }
+        };
+        var x = document.getElementById("camera");
+        </script>
+        <style>
+            .camera {
+                position: relative;
+                height: 400px;
+                width: 600px;
+                border: 1px solid #222;
+            }
+
+            .block {
+                position: absolute;
+                height: 50px;
+                width: 50px;
+                background: red;
+                border: 1px solid #222;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="camera">
+            <div id="b01" class="block">
+            </div>
+        </div>
+    </body>
+</html>
