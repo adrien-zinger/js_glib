@@ -54,10 +54,41 @@ var library = {
 				b[i].style.top = (parseInt(b[i].style.top.split("p")[0]) + 4) + "px";
 		},
 	},
+	
+	clic_for_move: function(event) {
+		var x = new Number();
+		var y = new Number();
+		var c = document.getElementById("camera");
+		if (event.x != undefined && event.y != undefined)
+		{
+		  x = event.x;
+		  y = event.y;
+		}
+		else
+		{
+		  x = event.clientX + document.body.scrollLeft +
+			  document.documentElement.scrollLeft;
+		  y = event.clientY + document.body.scrollTop +
+			  document.documentElement.scrollTop;
+		}
+		x -= c.offsetLeft;
+		y -= c.offsetTop;
+		
+		if (x > (document.getElementById("camera").offsetWidth - c.offsetLeft)/2)
+			library.camera.move_right();
+		else
+			library.camera.move_left();
+		if (y > (document.getElementById("camera").offsetHeight - c.offsetTop)/2)
+			library.camera.move_down();
+		else
+			library.camera.move_up();
+	}
 };
 
 var launch_map = function() {
-	library.map.compt = 0;
+	document.getElementById("camera").addEventListener("mousedown", library.clic_for_move, false);
 	library.map.block_set({x: 10, y: 10, c: "camera"});
 	library.map.block_set({x: 30, y: 40, c: "camera"});
+	library.map.block_set({x: 70, y: 40, c: "camera"});
+	library.map.block_set({x: 50, y: 20, c: "camera"});
 }
