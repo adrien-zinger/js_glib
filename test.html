@@ -23,8 +23,16 @@
     <body>
         <div id="camera">
         </div>
-	<script>
-		window.onload = launch_map;
-	</script>
-    </body>
+        <button onclick="newmove()">onclic</button>
+    <script>
+        window.onload = launch_map;
+        function newmove() {
+            console.log("define somth");
+            library.clic_n_move.define_onclic(function (args) {
+                console.log("know I don't move... I say that!("
+                            + args.pos_clic_x + ", " + args.pos_clic_y + ")");
+            });
+        }
+    </script>
+</body>
 </html>
