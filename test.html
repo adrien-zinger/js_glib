@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script src="maps.js"></script>
-        <style>
-            #camera {
-                position: relative;
-                height: 400px;
-                width: 600px;
-                border: 1px solid #222;
-				overflow: hidden;
-            }
+<head>
+	<script src="maps.js"></script>
+	<style>
+		#camera {
+			position: relative;
+			height: 400px;
+			width: 600px;
+			border: 1px solid #222;
+			overflow: hidden;
+		}
+		.block {
+			position: absolute;
+			height: 20px;
+			width: 20px;
+			background: #555;
+			border: 1px solid #222;
+		}
+	</style>
+</head>
 
-            .block {
-                position: absolute;
-                height: 20px;
-                width: 20px;
-                background: green;
-                border: 1px solid #222;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="camera">
-        </div>
-        <button onclick="newmove()">onclic</button>
-    <script>
-        window.onload = launch_map;
-        function newmove() {
-            console.log("define somth");
-            library.clic_n_move.define_onclic(function (args) {
-                console.log("know I don't move... I say that!("
-                            + args.pos_clic_x + ", " + args.pos_clic_y + ")");
-            });
-        }
-    </script>
+<body>
+	<div id="camera">
+	</div>
+	<script>
+		window.onload = function () {
+			library.map.block_set({x: 0, y: 0});
+			library.map.block_set({x: 0, y: 1});
+			library.map.block_set({x: 1, y: 0});
+			library.map.block_set({x: 1, y: 1});
+
+			document.getElementById("camera").addEventListener("mousedown", function () {
+				library.camera.move_right(4);
+			}, false);
+		};
+	</script>
 </body>
 </html>
