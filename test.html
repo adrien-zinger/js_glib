@@ -25,7 +25,6 @@
         </div>
         <button onclick="newmove()">onclic</button>
     <script>
-        window.onload = launch_map;
         function newmove() {
             console.log("define somth");
             library.clic_n_move.define_onclic(function (args) {
@@ -33,6 +32,14 @@
                             + args.pos_clic_x + ", " + args.pos_clic_y + ")");
             });
         }
-    </script>
+
+		window.onload = function () {
+			init_library();
+			library.map.block_set({x: 0, y: 0});
+			library.map.block_set({x: 0, y: 1});
+			library.map.block_set({x: 1, y: 0});
+			library.map.block_set({x: 1, y: 1});
+		};
+	</script>
 </body>
 </html>

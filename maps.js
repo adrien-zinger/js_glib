@@ -2,58 +2,70 @@
 
 var library = {
     map: {
-        blocks: [],
-        compt: 0,
-        block_get: function (args) {
-            if (typeof library.map.blocks[args.x] === "undefined")
-                library.map.blocks[args.x] = [];
-            return library.map.blocks[args.x][args.y];
-        },
+		blocks: [],
 
-        block_set: function (args) {
-            if (typeof library.map.blocks[args.x] === "undefined")
-                library.map.blocks[args.x] = [];
-            library.map.blocks[args.x][args.y] = args.block;
-            var newBlock = document.createElement("div");
-            newBlock.id = "b" + library.map.compt;
-            newBlock.className = "block";
-            newBlock.style.left = args.x + "px";
-            newBlock.style.top = args.y + "px";
-            document.getElementById("camera").appendChild(newBlock);
-            ++library.map.compt;
-        },
-    },
+		block_set: function (args) {
+			var id = "b_" + args.x + "_" + args.y;
 
-    camera: {
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0,
+			var block = document.getElementById(id);
+			if (!block) {
+				block = document.createElement("div");
+				block.id = id;
+				block.className = "block";
+			}
 
-        move_right: function (args) {
-            var b = document.getElementsByClassName("block");
-            for (var i = 0; i < b.length; ++i)
-                b[i].style.left = (parseInt(b[i].style.left.split("p")[0]) + 4) + "px";
-        },
+			block.style.left = (args.x * 20) + "px";
+			block.style.top = (args.y * 20) + "px";
 
-        move_left: function (args) {
-            var b = document.getElementsByClassName("block");
-            for (var i = 0; i < b.length; ++i)
-                b[i].style.left = (parseInt(b[i].style.left.split("p")[0]) - 4) + "px";
-        },
+			var camera = document.getElementById("camera");
+			camera.appendChild(block);
 
-        move_up: function (args) {
-            var b = document.getElementsByClassName("block");
-            for (var i = 0; i < b.length; ++i)
-                b[i].style.top = (parseInt(b[i].style.top.split("p")[0]) - 4) + "px";
-        },
+			if (typeof library.map.blocks[args.x] === "undefined")
+				library.map.blocks[args.x] = [];
+			library.map.blocks[args.x][args.y] = block;
+		},
 
-        move_down: function (args) {
-            var b = document.getElementsByClassName("block");
-            for (var i = 0; i < b.length; ++i)
-                b[i].style.top = (parseInt(b[i].style.top.split("p")[0]) + 4) + "px";
-        },
-    },
+		block_get: function (args) {
+			if (typeof library.map.blocks[args.x] === "undefined")
+				library.map.blocks[args.x] = [];
+			return library.map.blocks[args.x][args.y];
+		},
+	},
+
+	camera: {
+		x: 0,
+		y: 0,
+
+		move: function (args) {
+			library.camera.x += args.x;
+			library.camera.y += args.y;
+
+			var blocks = library.map.blocks;
+			for (var x = 0; x < blocks.length; ++x)
+				if (typeof blocks[x] !== "undefined")
+					for (var y = 0; y < blocks[x].length; ++y)
+						if (typeof blocks[x][y] !== "undefined") {
+							blocks[x][y].style.left = ((x * 20) - library.camera.x) + "px";
+							blocks[x][y].style.top = ((y * 20) - library.camera.y) + "px";
+						}
+		},
+
+		move_left: function (length) {
+			library.camera.move({x: length, y: 0});
+		},
+
+		move_right: function (length) {
+			library.camera.move({x: -length, y: 0});
+		},
+
+		move_up: function (length) {
+			library.camera.move({x: 0, y: length});
+		},
+
+		move_down: function (length) {
+			library.camera.move({x: 0, y: -length});
+		},
+	},
 
     hero: {
         life: 100,
@@ -128,6 +140,7 @@ var library = {
 
         define_onclic: function (move) {
             library.clic_n_move.move_defined = move;
+			console.log("function defined");
         },
         
         clic_event: function (event) {
@@ -149,13 +162,13 @@ var library = {
 
             if (library.clic_n_move.move_defined == null) {
                 if (x > (document.getElementById("camera").offsetWidth - c.offsetLeft) / 2)
-                    library.camera.move_right();
+                    library.camera.move_right(4);
                 else
-                    library.camera.move_left();
+                    library.camera.move_left(4);
                 if (y > (document.getElementById("camera").offsetHeight - c.offsetTop) / 2)
-                    library.camera.move_down();
+                    library.camera.move_down(4);
                 else
-                    library.camera.move_up();
+                    library.camera.move_up(4);
             } else {
                 library.clic_n_move.move_defined({pos_clic_x: x, pos_clic_y: y});
             }
@@ -164,9 +177,7 @@ var library = {
 
 };
 
-var launch_map = function () {
-    document.getElementById("camera").addEventListener("mousedown", library.clic_n_move.clic_event, false);
-    library.map.block_set({ x: 10, y: 10, c: "camera" });
-    library.map.block_set({ x: 30, y: 40, c: "camera" });
-    library.map.block_set({ x: 70, y: 40, c: "camera" });
+var init_library = function () {
+    document.getElementById("camera").addEventListener("mousedown", 
+					library.clic_n_move.clic_event, false);
 }
