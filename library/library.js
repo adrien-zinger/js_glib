@@ -237,7 +237,7 @@ var library_life = {
                                                            ** LIBRARY FORM **
 *******************************************************************************/
 
-form = function() {
+var form = function() {
     this.height = 0;
     this.width = 0;
     this.value = 0;
@@ -251,6 +251,8 @@ form = function() {
             console.log("ERROR: WIGTH UNDEFINED");
         if (args.height === 'undefined')
             console.log("ERROR: HEIGHT UNDEFINED");
+        if (args.position !== 'undefined')
+            this.position = args.position;
         this.height = args.height;
         this.width = args.width;
         this.stuff(args.form);
@@ -259,11 +261,11 @@ form = function() {
         if (form == "rectangle") {
             for (var i = 0; i < this.width; ++i)
                 for (var j = 0; j < this.height; ++j)
-                    block_set({ x: this.position.x, y: this.position.y });
+                    library.map.block_set({ x: this.position.x + i, y: this.position.y + j });
         if (form == "triange")
             for (var i = 0; i < this.width; ++i)
                 for (var j = i; j < this.height; ++j)
-                    block_set({ x: this.position.x, y: this.position.y });
+                    library.map.block_set({ x: this.position.x, y: this.position.y });
         }
         //FIX ME
     };
