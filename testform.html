@@ -1,42 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script src="library/library.js"></script>
-        <style>
-            #camera {
-                position: relative;
-                height: 400px;
-                width: 600px;
-                border: 1px solid #222;
-                overflow: hidden;
-            }
 
-            .block {
-                position: absolute;
-                height: 20px;
-                width: 20px;
-                background: green;
-                border: 1px solid #222;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="camera">
-        </div>
-        <button onclick="newmove()">onclic</button>
+<head>
+    <script src="library/library.js"></script>
+    <style>
+        #camera {
+            position: relative;
+            height: 400px;
+            width: 600px;
+            border: 1px solid #222;
+            overflow: hidden;
+        }
+        .block {
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            background: green;
+            border: 1px solid #222;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="camera">
+    </div>
+    <button onclick="newmove()">onclic</button>
     <script>
         function newmove() {
             console.log("define somth");
             library.clic_n_move.define_onclic(function (args) {
-                console.log("know I don't move... I say that!("
-                            + args.pos_clic_x + ", " + args.pos_clic_y + ")");
+                console.log("know I don't move... I say that!(" + args.pos_clic_x + ", " + args.pos_clic_y + ")");
             });
         }
 
         window.onload = function () {
             var f = new form();
-            f.create({ form: "rectangle", position: {x: 0, y: 0,}, width: 5, height: 9,});
+            f.create({
+                form: "rectangle",
+                position: {
+                    x: 0,
+                    y: 0,
+                },
+                width: 5,
+                height: 9,
+            });
         };
     </script>
 </body>
+
 </html>
