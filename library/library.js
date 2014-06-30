@@ -1,10 +1,53 @@
 "use strict"
-
+"use courtoisie"
+/*  reponses
+	Useless, because we can add them in DOM:
+				x = getElementById("#id")
+				x.value = 1;
+				x.state = "solid"
+	->vrai
+	Why value? Why not just css class for kind of block?
+		->profondeur
+	Why state here? We can manage colisions with an another array of booleans!
+		-> solid, translucide, ground, liquid, etc. (colision)
+	// 20 -> Fix to CONSTANT
+		-> bah
+	// what is a block which are not solid?
+		->dictionary, State
+	Why players are in map? Create a player object!
+		-> brian is in the kitchen
+	// Cool! How do you want name your chicken?
+		-> cas générale je pensais: name = id
+	/* OK, perhaps you would say "polygon" ? Just because I don't see checkbox...
+		-> hein?
+	We have numerous good algorythms to dram forms with pixels on wikipedia!
+		-> my grand grand father is on wikipedia too
+	// what's look like a "triange"?
+		-> lol. Mais sans blaguer je m'en foutais un peu je testais avec les rectangles
+	// Ok good, let me think that blocks are not currently movable...
+		-> comment t'as fais pour deviner?
+	>>>>>>> just add todo for event
+		-> oups?
+	<<<<<<< HEAD
+		-> re- oups?
+	// Do a "group" object to play with block easier!
+		-> yeap je voulais faire ça aussi
+	// And if height or width are undefined?
+		-> message puis ça crash
+	// console.error prints pretty good errors !
+		-> super :) t'aurai pu le faire aussi...
+	// Useless...
+		-> mots.... il y en a tellement d'autre!
+	// Of the top-left corner ?
+		-> Of the top-left corner
+	// Of the bounding box ?
+		-> Of the bounding box
+	// Hum ?
+		-> c'est dégueulasse?
+*/
 var library = {
 	map: {
 		blocks: [],
-		players: [], // ?
-		enemies: [], // ?
 
 		block_set: function (args) {
 			var id = "b_" + args.x + "_" + args.y;
@@ -16,7 +59,7 @@ var library = {
 				block.className = "block";
 			}
 
-			block.style.left = (args.x * 20) + "px"; // 20 -> Fix to CONSTANT
+			block.style.left = (args.x * 20) + "px"; 
 			block.style.top = (args.y * 20) + "px";
 
 			var camera = document.getElementById("camera");
@@ -26,16 +69,9 @@ var library = {
 				this.blocks[args.x] = [];
 			library.map.blocks[args.x][args.y] = {
 				elem: block,
-				value: "1", // 1 is a string ?
-				state: "solid", // what is a block which are not solid?
-				/* Useless, because we can add them in DOM:
-				x = getElementById("#id")
-				x.value = 1;
-				x.state = "solid"
-
-				Why value? Why not just css class for kind of block?
-				Why state here? We can manage colisions with an another array of booleans!
-				*/
+				value: 1, 
+				state: "solid",
+				
 			};
 		},
 
@@ -45,14 +81,6 @@ var library = {
 			return this.blocks[args.x][args.y];
 		},
 
-		/* Why players are in map? Create a player object! */
-		add_player: function (player) {
-			library.map.players.push(player);
-		},
-
-		get_players: function () {
-			return library.map.players;
-		},
 	},
 
 	camera: {
@@ -199,7 +227,7 @@ var library_life = {
 		};
 
 		this.name_set = function (name) {
-			this.name = name; // Cool! How do you want name your chicken?
+			this.name = name;
 		};
 		this.life_set = function (life) {
 			this.life = life;
@@ -267,19 +295,17 @@ var library_life = {
  **                               LIBRARY FORM                                **
  *******************************************************************************/
 
-/* OK, perhaps you would say "polygon" ? Just because I don't see checkbox... */
-
 var form = {
-	height: 0, // Of the bounding box ?
+	height: 0, 
 	width: 0,
-	value: 0, // Hum ?
-	position: { // Of the top-left corner ?
+	value: 0, 
+	position: { 
 		x: 0,
 		y: 0,
 	},
 	create: function (args) {
 		if (args === 'undefined')
-			console.log("ERROR: NO ARGUMENTS"); // console.error prints pretty good errors !
+			console.log("ERROR: NO ARGUMENTS"); 
 		if (args.form === 'undefined')
 			console.log("ERROR: FORM UNDEFINED");
 		if (args.width === 'undefined')
@@ -288,9 +314,9 @@ var form = {
 			console.log("ERROR: HEIGHT UNDEFINED");
 		if (args.position !== 'undefined')
 			this.position = args.position;
-		this.height = args.height; // And if height or width are undefined?
+		this.height = args.height; 
 		this.width = args.width;
-		this.stuff(args.form); // hum... OK!
+		this.stuff(args.form);
 	},
 	stuff: function (form) {
 		if (form == "rectangle") {
@@ -300,32 +326,21 @@ var form = {
 						x: this.position.x + i,
 						y: this.position.y + j,
 					});
-			if (form == "triange") // what's look like a "triange"?
-				for (var i = 0; i < this.width; ++i)
-					for (var j = i; j < this.height; ++j)
-						library.map.block_set({
-							x: this.position.x,
-							y: this.position.y,
-						});
-		}
-		// FIX ME: We have numerous good algorythms to dram forms with pixels on wikipedia!
+		// FIX ME: Oh oui Yvan fixe moi!
 	},
 
-	// Useless...
 	value_set: function (args) {
 		// TODO
 	},
 	value_get: function (args) {
 		// TODO
 	},
-
-	// Ok good, let me think that blocks are not currently movable...
+	
 	position_set: function (args) {
 		// TODO
 	},
 	position_get: function (args) {
 		// TODO
 	},
-
-	// Do a "group" object to play with block easier!
-};
+}
+}
