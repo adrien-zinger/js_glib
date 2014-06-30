@@ -3,8 +3,8 @@
 var library = {
 	map: {
 		blocks: [],
-		players: [],
-		enemies: [],
+		players: [], // ?
+		enemies: [], // ?
 
 		block_set: function (args) {
 			var id = "b_" + args.x + "_" + args.y;
@@ -16,27 +16,36 @@ var library = {
 				block.className = "block";
 			}
 
-			block.style.left = (args.x * 20) + "px";
+			block.style.left = (args.x * 20) + "px"; // 20 -> Fix to CONSTANT
 			block.style.top = (args.y * 20) + "px";
 
 			var camera = document.getElementById("camera");
 			camera.appendChild(block);
 
 			if (typeof library.map.blocks[args.x] === "undefined")
-				library.map.blocks[args.x] = [];
+				this.blocks[args.x] = [];
 			library.map.blocks[args.x][args.y] = {
 				elem: block,
-				value: "1",
-				state: "solid",
+				value: "1", // 1 is a string ?
+				state: "solid", // what is a block which are not solid?
+				/* Useless, because we can add them in DOM:
+				x = getElementById("#id")
+				x.value = 1;
+				x.state = "solid"
+
+				Why value? Why not just css class for kind of block?
+				Why state here? We can manage colisions with an another array of booleans!
+				*/
 			};
 		},
 
 		block_get: function (args) {
 			if (typeof library.map.blocks[args.x] === "undefined")
-				library.map.blocks[args.x] = [];
-			return library.map.blocks[args.x][args.y];
+				this.blocks[args.x] = [];
+			return this.blocks[args.x][args.y];
 		},
 
+		/* Why players are in map? Create a player object! */
 		add_player: function (player) {
 			library.map.players.push(player);
 		},
@@ -96,7 +105,7 @@ var library = {
 };
 
 /*******************************************************************************
- ** LIBRARY EVENT **
+ **                               LIBRARY EVENT                               **
  *******************************************************************************/
 
 var library_event = {
@@ -150,7 +159,7 @@ var library_event = {
 };
 
 /*******************************************************************************
- ** LIBRARY LIFE **
+ **                               LIBRARY LIFE                                **
  *******************************************************************************/
 
 var library_life = {
@@ -177,8 +186,9 @@ var library_life = {
 				if (typeof args.position !== "undefined")
 					this.position = args.position;
 			}
-			//FIX ME
-			/*var player = document.getElementById(library_life.player.name);
+
+			/* ----- FIX ME -----
+			var player = document.getElementById(library_life.player.name);
 			if (!player) {
 				player = document.createElement("div");
 				player.id = this.name;
@@ -189,7 +199,7 @@ var library_life = {
 		};
 
 		this.name_set = function (name) {
-			this.name = name;
+			this.name = name; // Cool! How do you want name your chicken?
 		};
 		this.life_set = function (life) {
 			this.life = life;
@@ -254,20 +264,22 @@ var library_life = {
 
 
 /*******************************************************************************
- ** LIBRARY FORM **
+ **                               LIBRARY FORM                                **
  *******************************************************************************/
 
-var form = function () {
-	this.height = 0;
-	this.width = 0;
-	this.value = 0;
-	this.position = {
+/* OK, perhaps you would say "polygon" ? Just because I don't see checkbox... */
+
+var form = {
+	height: 0, // Of the bounding box ?
+	width: 0,
+	value: 0, // Hum ?
+	position: { // Of the top-left corner ?
 		x: 0,
 		y: 0,
-	};
-	this.create = function (args) {
+	},
+	create: function (args) {
 		if (args === 'undefined')
-			console.log("ERROR: NO ARGUMENTS");
+			console.log("ERROR: NO ARGUMENTS"); // console.error prints pretty good errors !
 		if (args.form === 'undefined')
 			console.log("ERROR: FORM UNDEFINED");
 		if (args.width === 'undefined')
@@ -276,38 +288,44 @@ var form = function () {
 			console.log("ERROR: HEIGHT UNDEFINED");
 		if (args.position !== 'undefined')
 			this.position = args.position;
-		this.height = args.height;
+		this.height = args.height; // And if height or width are undefined?
 		this.width = args.width;
-		this.stuff(args.form);
-	};
-	this.stuff = function (form) {
+		this.stuff(args.form); // hum... OK!
+	},
+	stuff: function (form) {
 		if (form == "rectangle") {
 			for (var i = 0; i < this.width; ++i)
 				for (var j = 0; j < this.height; ++j)
 					library.map.block_set({
 						x: this.position.x + i,
-						y: this.position.y + j
+						y: this.position.y + j,
 					});
-			if (form == "triange")
+			if (form == "triange") // what's look like a "triange"?
 				for (var i = 0; i < this.width; ++i)
 					for (var j = i; j < this.height; ++j)
 						library.map.block_set({
 							x: this.position.x,
-							y: this.position.y
+							y: this.position.y,
 						});
 		}
-		//FIX ME
-	};
-	this.value_set = function (args) {
-		//TODO
-	};
-	this.value_get = function (args) {
-		//TODO
-	};
-	this.position_set = function (args) {
-		//TODO
-	};
-	this.position_get = function (args) {
-		//TODO
-	};
+		// FIX ME: We have numerous good algorythms to dram forms with pixels on wikipedia!
+	},
+
+	// Useless...
+	value_set: function (args) {
+		// TODO
+	},
+	value_get: function (args) {
+		// TODO
+	},
+
+	// Ok good, let me think that blocks are not currently movable...
+	position_set: function (args) {
+		// TODO
+	},
+	position_get: function (args) {
+		// TODO
+	},
+
+	// Do a "group" object to play with block easier!
 };
